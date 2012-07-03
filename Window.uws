@@ -1,0 +1,86 @@
+//
+// 単体テスト
+//
+ifb GET_UWSC_NAME = "Window.uws"
+	dim wid = exec("notepad")
+	Window.set(wid)
+	
+	// アクティブ化テスト
+	ctrlwin(wid, min)
+	print "ウィンドウをアクティブにするテスト"
+	Window.activate()
+	
+	// 後始末
+	ctrlwin(wid, close)
+endif
+
+//
+// module本体
+//
+module Window
+
+	//
+	// ウィンドウハンドルのID
+	//
+	dim id = -1
+	
+	//
+	// ウィンドウIDを設定する
+	//
+	procedure set(window_id)
+		this.id = window_id
+	fend
+	
+	//
+	// マウス、キーボード、画像認識をスクリーン基準にする
+	//
+	procedure set_absolute()
+		mouseorg(this.id, 0)
+	fend
+	
+	//
+	// マウス、キーボード、画像認識の基準位置をクライアント領域にする
+	//
+	procedure set_relative()
+		mouseorg(this.id, 1)
+	fend
+	
+	//
+	// マウス、キーボード操作を直接ウィンドウに送信するようにする
+	//
+	procedure set_direct()
+		mouseorg(this.id, 2)
+	fend
+	
+	//
+	// ウィンドウをアクティブにする
+	//
+	procedure activate()
+		ctrlwin(this.id, normal)
+		ctrlwin(this.id, activate)
+	fend
+	
+	//
+	// クライアント領域始点の絶対X座標を取得する
+	//
+	function get_absolute_x()
+		result = status(this.id, ST_CLX)
+	fend
+	
+	//
+	// クライアント領域始点の絶対Y座標を取得する
+	//
+	function get_absolute_y()
+		result = status(this.id, ST_CLY)
+	fend
+	
+	//
+	// 画面のスクリーンショットを撮影する
+	//
+	procedure capture_screen()
+		this.activate()
+		kbd(VK_SNAPSHOT, down, 40)
+		kbd(VK_SNAPSHOT, up)
+	fend
+	
+endmodule

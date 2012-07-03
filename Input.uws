@@ -1,0 +1,94 @@
+module Input
+	
+	const DEFAULT_DOWN_DURATION = 20
+	
+	//
+	// 文字列から仮想キーコードを取得する
+	//
+	function get_keycode(str)
+		ifb str = "lshift"
+			result = VK_LSHIFT
+		elseif str = "rshift"
+			result = VK_RSHIFT
+		elseif str = "lalt"
+			result = VK_LMENU
+		elseif str = "ralt"
+			result = VK_RMENU
+		elseif str = "←"
+			result = VK_LEFT
+		elseif str = "↓"
+			result = VK_DOWN
+		elseif str = "↑"
+			result = VK_UP
+		elseif str = "→"
+			result = VK_RIGHT
+		else
+			result = eval("VK_" + str)
+		endif
+	fend
+	
+	//
+	// 指定したキーを押す
+	//
+	procedure key_down(code, duration = this.DEFAULT_DOWN_DURATION)
+		kbd(code, down, duration)
+	fend
+	
+	//
+	// 指定したキーを離す
+	//
+	procedure key_up(code, duration = this.DEFAULT_DOWN_DURATION + 20)
+		kbd(code, up, duration)
+	fend
+	
+	//
+	// 指定したキーを押して離す
+	//
+	procedure key_press(code, duration = this.DEFAULT_DOWN_DURATION)
+		this.key_down(code, duration)
+		this.key_up(code, duration + 20)
+	fend
+	
+	//
+	// マウスボタン（左）を押す
+	//
+	procedure mouse_down(x = empty, y = empty)
+		ifb x = EMPTY or y = EMPTY then
+			btn(left, down, this.DEFAULT_DOWN_DURATION)
+		else
+			btn(left, down, x, y, this.DEFAULT_DOWN_DURATION)
+		endif
+	fend
+	
+	//
+	// マウスボタン（左）を離す
+	//
+	procedure mouse_up(x = empty, y = empty)
+		ifb x = empty or y = empty then
+			btn(left, up)
+		else
+			btn(left, up, x, y)
+		endif
+	fend
+	
+	//
+	// マウスボタン（左）をクリックする
+	//
+	procedure mouse_click(x = empty, y = empty)
+		ifb x = empty or y = empty then
+			btn(left, click)
+		else
+			btn(left, click, x, y)
+		endif
+	fend
+	
+	//
+	// 指定されたキーが押されるまで待機する
+	//
+	procedure wait_key(code)
+		repeat
+			sleep(0.1)
+		until getkeystate(code)
+	fend
+	
+endmodule

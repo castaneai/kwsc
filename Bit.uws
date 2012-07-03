@@ -1,0 +1,38 @@
+//
+// ビットを扱う機能を提供するモジュール
+//
+
+//
+// 単体テスト
+//
+ifb GET_UWSC_NAME = "Bit.uws"
+	// 左シフトテスト
+	print "左シフトのテスト。1から左にシフトしていきます。"
+	for i = 0 to 31
+		print "2 << " + i + ": " + Bit.shift_left(1, i)
+	next
+	
+	// 右シフトテスト
+	print "右シフトのテスト。15から右にシフトしていきます。"
+	for i = 0 to 4
+		print "15 >> " + i + ": " + Bit.shift_right(15, i)
+	next
+endif
+
+module Bit
+
+	//
+	// 左シフト演算
+	//
+	function shift_left(data, shift)
+		result = data * power(2, shift)
+	fend
+	
+	//
+	// 右シフト演算
+	//
+	function shift_right(data, shift)
+		result = int(data / power(2, shift))
+	fend
+
+endmodule
