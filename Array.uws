@@ -1,0 +1,53 @@
+//
+// 単体テスト
+//
+ifb GET_UWSC_NAME = "Array.uws"
+	dim str = "0B 2A 35 4F"
+	dim array[0]
+	Array.split(array, str, " ")
+	Array.dump(array)
+endif
+
+//
+// 配列操作を支援するモジュール
+//
+module Array
+
+	//
+	// 配列の中身をprintで出力する
+	//
+	procedure dump(array[])
+		for i = 0 to length(array) - 1
+			print i + " => " + array[i]
+		next
+	fend
+
+	//
+	// 文字列を指定文字で区切って配列に格納する
+	// 返り値は完成した配列の要素数
+	//
+	function split(var array[], str, delimiter)
+		str = trim(str)
+		dim count = 0
+		dim buffer = ""
+		for i = 1 to lengthb(str)
+			char = copyb(str, i, 1)
+			ifb char = delimiter
+				count = count + 1
+				resize(array, count - 1)
+				array[count - 1] = buffer
+				buffer = ""
+			else
+				buffer = buffer + char
+			endif
+		next
+		ifb length(buffer) > 0
+			count = count + 1
+			resize(array, count - 1)
+			array[count - 1] = buffer
+		endif
+		
+		result = count 
+	fend
+
+endmodule
