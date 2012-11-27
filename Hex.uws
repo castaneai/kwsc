@@ -1,0 +1,53 @@
+//
+// 単体テスト
+//
+ifb GET_UWSC_NAME = "Hex.uws"
+	dim hex = "FF"
+	print Hex.hex2int(hex)
+
+	dim str = ""
+	for i = $30 to $7E
+		str = str + chr(i)
+	next
+	print Hex.str2hex(str)
+	print Hex.hex2str(Hex.str2hex(str))
+endif
+
+call "Array.uws"
+
+module Hex
+
+	//
+	// バイト列データ文字列を16進数表記文字列に変換する
+	//
+	function str2hex(str)
+		dim buffer = ""
+		for i = 1 to lengthb(str)
+			ascii = ascb(copyb(str, i, 1))
+			if ascii < $10 then char = "0" + format(ascii, 0, -1) else char = format(ascii, 0, -1)
+			buffer = buffer + strconv(char, SC_UPPERCASE) + " "
+		next
+		result = trim(buffer)
+	fend
+	
+	//
+	// 16進数文字を10進数整数に変換する
+	//
+	function hex2int(hex)
+		result = eval("$" + hex)
+	fend
+	
+	//
+	// 16進数表記文字列をバイト列データ文字列に変換する
+	//
+	function hex2str(hex)
+		dim hex_array[0]
+		Array.split(hex_array, hex, " ")
+		dim buffer = ""
+		for i = 0 to length(hex_array) - 1
+			buffer = buffer + chr(Hex.hex2int(hex_array[i]))
+		next
+		result = buffer
+	fend
+	
+endmodule
