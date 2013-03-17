@@ -1,0 +1,58 @@
+//
+// 単体テスト
+//
+ifb GET_UWSC_NAME = "Distribution.uws"
+	dim src_files[] = "dist_test1.uws", "dist_test2.uws", "dist_test3.uws"
+	for i = 0 to length(src_files) - 1
+		dim fp = fopen(src_files[i], F_WRITE)
+		fput(fp, "print <#DBL>" + src_files[i] + "<#DBL>")
+		fclose(fp)
+	next
+	
+	dim dest_file = GET_CUR_DIR + "\dist_result.uws"
+	Distribution.distribute(src_files, dest_file)
+	
+	for i = 0 to length(src_files) - 1
+		doscmd("del " + src_files[i])
+	next
+
+	doscmd("del " + dest_file)
+endif
+
+//
+// module本体
+//
+module Distribution
+
+	procedure distribute(src_files[], dest_file)
+		// 結果ファイルをまず作る
+		dim dest_fp = fopen(dest_file, F_WRITE or F_NOCR)
+		for i = 0 to length(src_files) - 1
+			dim src_fp = fopen(src_files[i])
+			dim content = fget(src_fp, F_ALLTEXT)
+			fput(dest_fp, this.minify(content))
+			fclose(src_fp)
+		next
+		fclose(dest_fp)
+		
+		dim uwsc_path = GET_UWSC_DIR + "\UWSC.exe"
+		print uwsc_path + " /A " + dest_file
+		exec(uwsc_path + " /A " + dest_file, true)
+		doscmd("del " + replace(dest_file, ".uws", ".org"))
+	fend
+	
+	//
+	// UWSCスクリプトの文字列を圧縮する
+	//
+	function minify(src)
+		src = replace(src, "<#CR>", ";")
+		src = replace(src, "<#TAB>", "")
+		src = replace(src, ";procedure", "<#CR>procedure")
+		src = replace(src, ";function", "<#CR>function")
+		src = replace(src, " = ", "=")
+		src = replace(src, ", ", ",")
+		src = trim(src)
+		result = src
+	fend
+	
+endmodule
