@@ -1,0 +1,19 @@
+//
+// 単体テスト
+//
+ifb GET_UWSC_NAME = "Test.uws"
+	Test.assert_equals("a", "a")
+	Test.assert_equals("a", "b")
+endif
+
+
+module Test
+	
+	procedure assert_equals(value1, value2)
+		ifb value1 <> value2
+			msgbox("[Assert Error]" + value1 + " != " + value2)
+			exitexit
+		endif
+	fend
+
+endmodule

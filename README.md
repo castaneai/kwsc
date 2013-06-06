@@ -1,14 +1,17 @@
-utilws
+kwsc
 =======
-UWSC用のちょっとした機能を楽にするモジュール群
+UWSCのちょっとした補助モジュール集
 
 モジュール一覧
------------
-* Array:配列処理の補助
-* Bit:ビット演算の補助
-* Hash:ハッシュテーブルの補助
-* Hex:16進数文字列操作の補助
-* Input:マウス/キーボード入力の補助
-* Profiler:処理時間計測
-* Window:ウィンドウ制御補助
-* Distribution: スクリプト配布支援
+-----------------
+* Array: 配列処理
+* Bit: ビット演算
+* Debug: printデバッグ
+* Distribution: スクリプト配布
+* Hex: 16進数文字列操作
+* Ini: iniファイルの読み書き
+* Input: マウス/キーボード入力
+* Profiler: 処理時間計測
+* Socket: TCPソケット処理
+* Test: テスト
+* Window: ウィンドウ制御

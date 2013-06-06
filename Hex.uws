@@ -2,15 +2,16 @@
 // 単体テスト
 //
 ifb GET_UWSC_NAME = "Hex.uws"
-	dim hex = "FF"
-	print Hex.hex2int(hex)
+	call Test.uws
+	
+	// 単一の16進数表記文字列を数値に変換できるか
+	dim test_hex_char = "FF"
+	Test.assert_equals(255, Hex.hex2int(test_hex_char))
 
-	dim str = ""
-	for i = $30 to $7E
-		str = str + chr(i)
-	next
-	print Hex.str2hex(str)
-	print Hex.hex2str(Hex.str2hex(str))
+	dim test_hex_str = "61 62 63 64 65 66 67"
+	dim test_str = "abcdefg"
+	Test.assert_equals(test_str, Hex.hex2str(test_hex_str))
+	Test.assert_equals(test_hex_str, Hex.str2hex(test_str))
 endif
 
 call "Array.uws"
@@ -45,7 +46,7 @@ module Hex
 		Array.split(hex_array, hex, " ")
 		dim buffer = ""
 		for i = 0 to length(hex_array) - 1
-			buffer = buffer + chr(Hex.hex2int(hex_array[i]))
+			buffer = buffer + chrb(Hex.hex2int(hex_array[i]))
 		next
 		result = buffer
 	fend

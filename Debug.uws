@@ -1,0 +1,72 @@
+//
+// 単体テスト
+//
+ifb GET_UWSC_NAME = "Debug.uws"
+	dim array[] = 1, 2, 3, 4, "A", "天", true
+	Debug.print_array(array)
+	Debug.print_array_with_index(array)
+	
+	dim array2d[2][2] = 0, 0, 1, _
+						1, 2, 1, _
+						1, 0, 0
+	Debug.print_2d_array(array2d)
+	
+	hashtbl tbl
+	tbl["first_key"] = "zero"
+	tbl["second_key"] = "one"
+	Debug.print_hashtbl(tbl)
+
+endif
+
+module Debug
+
+	//
+	// 文字列を""で囲んだものを返す
+	//
+	function enclose_str(str)
+		result = "<#DBL>" + str + "<#DBL>"
+	fend
+
+	procedure print_array(array[])
+		dim buf = "["
+		for i = 0 to length(array) - 1
+			dim value = array[i]
+			if vartype(value) = VAR_BSTR then value = this.enclose_str(value)
+			buf = buf + value
+			if i < length(array) - 1 then buf = buf + ", "
+		next
+		buf = buf + "]"
+		print buf
+	fend
+	
+	procedure print_array_with_index(array[])
+		print "array: ["
+		for i = 0 to length(array) - 1
+			dim value = array[i]
+			if vartype(value) = VAR_BSTR then value = this.enclose_str(value)
+			print "  " + i + ": " + value
+		next
+		print "]"
+	fend
+	
+	procedure print_hashtbl(tbl[])
+		print "hashtbl: ["
+		for i = 0 to length(tbl) - 1
+			dim key = tbl[i, HASH_KEY]
+			if vartype(key) = VAR_BSTR then key = this.enclose_str(key)
+			dim value = tbl[i, HASH_VAL]
+			if vartype(value) = VAR_BSTR then value = this.enclose_str(value)
+			print "  " + key + ": " + value
+		next
+		print "]"
+	fend
+	
+	procedure print_2d_array(array[][])
+		print "2d-array: ["
+		for i = 0 to length(array) - 1
+			this.print_array(array[i])
+		next
+		print "]"
+	fend
+
+endmodule

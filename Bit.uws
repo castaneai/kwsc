@@ -6,17 +6,15 @@
 // 単体テスト
 //
 ifb GET_UWSC_NAME = "Bit.uws"
+	call Test.uws
+	
 	// 左シフトテスト
-	print "左シフトのテスト。1から左にシフトしていきます。"
-	for i = 0 to 31
-		print "2 << " + i + ": " + Bit.shift_left(1, i)
-	next
+	Test.assert_equals(Bit.lshift(1, 1), 2)
+	Test.assert_equals(Bit.lshift(1, 10), 1024)
 	
 	// 右シフトテスト
-	print "右シフトのテスト。15から右にシフトしていきます。"
-	for i = 0 to 4
-		print "15 >> " + i + ": " + Bit.shift_right(15, i)
-	next
+	Test.assert_equals(Bit.rshift(2, 1), 1)
+	Test.assert_equals(Bit.rshift(1024, 10), 1)
 endif
 
 module Bit
@@ -24,14 +22,14 @@ module Bit
 	//
 	// 左シフト演算
 	//
-	function shift_left(data, shift)
+	function lshift(data, shift)
 		result = data * power(2, shift)
 	fend
 	
 	//
 	// 右シフト演算
 	//
-	function shift_right(data, shift)
+	function rshift(data, shift)
 		result = int(data / power(2, shift))
 	fend
 

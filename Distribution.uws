@@ -1,4 +1,10 @@
 //
+// 複数のuwscソースファイルを結合・圧縮して1つの配布用ファイルにするモジュール
+//
+
+
+
+//
 // 単体テスト
 //
 ifb GET_UWSC_NAME = "Distribution.uws"
@@ -24,6 +30,10 @@ endif
 //
 module Distribution
 
+	//
+	// 複数のuwscソースファイルを1つの配布用ファイルにする
+	// 配布用ファイルはUWSCによってスクランブル化処理が行われる
+	//
 	procedure distribute(src_files[], dest_file)
 		// 結果ファイルをまず作る
 		dim dest_fp = fopen(dest_file, F_WRITE or F_NOCR)

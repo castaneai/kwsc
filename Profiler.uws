@@ -12,15 +12,17 @@ module Profiler
 	// 開始する
 	//
 	procedure start()
-		this.start_time = gettime() + G_TIME_ZZ / 1000
+		gettime()
+		this.start_time = G_TIME_ZZ
 	fend
 	
 	//
-	// 停止し、結果をprintする
+	// 停止し、結果（ミリ秒）を返す
 	//
-	procedure stop()
-		dim end_time = gettime() + G_TIME_ZZ / 1000
-		print "profile: " + (end_time - this.start_time) + "sec."
+	function stop()
+		gettime()
+		dim end_time = G_TIME_ZZ
+		result = (end_time - this.start_time)
 	fend
 
 endmodule
