@@ -1,15 +1,15 @@
 //
-// ‚ ‚éˆ—‚É—v‚·‚éŽžŠÔ‚ðŒv‘ª‚·‚é‹@”\‚ð’ñ‹Ÿ‚·‚éƒ‚ƒWƒ…[ƒ‹
+// ã‚ã‚‹å‡¦ç†ã«è¦ã™ã‚‹æ™‚é–“ã‚’è¨ˆæ¸¬ã™ã‚‹æ©Ÿèƒ½ã‚’æä¾›ã™ã‚‹ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
 //
 module Profiler
 
 	//
-	// ŠJŽnŽž
+	// é–‹å§‹æ™‚åˆ»
 	//
 	dim start_time
 	
 	//
-	// ŠJŽn‚·‚é
+	// é–‹å§‹ã™ã‚‹
 	//
 	procedure start()
 		gettime()
@@ -17,7 +17,7 @@ module Profiler
 	fend
 	
 	//
-	// ’âŽ~‚µAŒ‹‰Êiƒ~ƒŠ•bj‚ð•Ô‚·
+	// åœæ­¢ã—ã€çµæžœï¼ˆãƒŸãƒªç§’ï¼‰ã‚’è¿”ã™
 	//
 	function stop()
 		gettime()

@@ -1,35 +1,35 @@
 //
-// .iniƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‘‚«‚·‚éƒ‚ƒWƒ…[ƒ‹
-// ”z—ñƒf[ƒ^‚ğini‚É•Û‘¶Aini‚©‚ç“Ç‚İ‚İ@‚·‚é‚±‚Æ‚ª‚Å‚«‚é
+// .iniãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿æ›¸ãã™ã‚‹ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
+// é…åˆ—ãƒ‡ãƒ¼ã‚¿ã‚’iniã«ä¿å­˜ã€iniã‹ã‚‰èª­ã¿è¾¼ã¿ã€€ã™ã‚‹ã“ã¨ãŒã§ãã‚‹
 //
 
 //
-// ’P‘ÌƒeƒXƒg
+// å˜ä½“ãƒ†ã‚¹ãƒˆ
 //
 ifb GET_UWSC_NAME = "Ini.uws"
 	call Test.uws
 	call Array.uws
 	call Debug.uws
 
-	// ”z—ñ‘‚«‚İ‚ÌƒeƒXƒg
-	dim write_array[] = 1, 2, 3, true, 0, "‚ "
+	// é…åˆ—æ›¸ãè¾¼ã¿ã®ãƒ†ã‚¹ãƒˆ
+	dim write_array[] = 1, 2, 3, true, 0, "ã‚"
 	Ini.write_array("test_section", "write_array", write_array, "ini_test.ini")
 	dim read_array = Ini.read_array("test_section", "write_array", "ini_test.ini")
 		
 	Test.assert_equals(true, Array.sequential_equal(write_array, read_array))
 	
-	// ƒeƒXƒg—p‚Ìini‚ğíœ
+	// ãƒ†ã‚¹ãƒˆç”¨ã®iniã‚’å‰Šé™¤
 	doscmd("del ini_test.ini")
 endif
 
 //
-// ƒ‚ƒWƒ…[ƒ‹–{‘Ì
+// ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«æœ¬ä½“
 //
 module Ini
 	
 	//
-	// ”z—ñ‚Ì‘‚«‚İ
-	// true, false‚Í1, 0‚Æ‚µ‚Ä‘‚«‚Ü‚ê‚é
+	// é…åˆ—ã®æ›¸ãè¾¼ã¿
+	// true, falseã¯1, 0ã¨ã—ã¦æ›¸ãè¾¼ã¾ã‚Œã‚‹
 	//
 	procedure write_array(section, key, array[], ini_filename)
 		for i = 0 to length(array) - 1
@@ -38,9 +38,9 @@ module Ini
 	fend
 	
 	//
-	// ”z—ñ‚Ì“Ç‚İ‚İ
-	// –ß‚è’l‚Å”z—ñ‚ğ•Ô‚·‚Ì‚ÅASAFEARRAYŒ^‚Æ‚È‚Á‚Ä•Ô‚Á‚Ä‚­‚é
-	// ”’l‚Ì‚İ‚Å•\Œ»‚³‚ê‚½’l‚Í©“®“I‚É”’l‚ÉƒLƒƒƒXƒg‚³‚ê‚é
+	// é…åˆ—ã®èª­ã¿è¾¼ã¿
+	// æˆ»ã‚Šå€¤ã§é…åˆ—ã‚’è¿”ã™ã®ã§ã€SAFEARRAYå‹ã¨ãªã£ã¦è¿”ã£ã¦ãã‚‹
+	// æ•°å€¤ã®ã¿ã§è¡¨ç¾ã•ã‚ŒãŸå€¤ã¯è‡ªå‹•çš„ã«æ•°å€¤ã«ã‚­ãƒ£ã‚¹ãƒˆã•ã‚Œã‚‹
 	//
 	function read_array(section, key, ini_filename)
 		dim count = 0

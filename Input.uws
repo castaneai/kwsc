@@ -3,7 +3,7 @@ module Input
 	const DEFAULT_DOWN_DURATION = 20
 	
 	//
-	// •¶š—ñ‚©‚ç‰¼‘zƒL[ƒR[ƒh‚ğæ“¾‚·‚é
+	// æ–‡å­—åˆ—ã‹ã‚‰ä»®æƒ³ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—ã™ã‚‹
 	//
 	function get_keycode(str)
 		ifb str = "lshift"
@@ -14,13 +14,13 @@ module Input
 			result = VK_LMENU
 		elseif str = "ralt"
 			result = VK_RMENU
-		elseif str = "©"
+		elseif str = "â†"
 			result = VK_LEFT
-		elseif str = "«"
+		elseif str = "â†“"
 			result = VK_DOWN
-		elseif str = "ª"
+		elseif str = "â†‘"
 			result = VK_UP
-		elseif str = "¨"
+		elseif str = "â†’"
 			result = VK_RIGHT
 		else
 			result = eval("VK_" + str)
@@ -28,21 +28,21 @@ module Input
 	fend
 	
 	//
-	// w’è‚µ‚½ƒL[‚ğ‰Ÿ‚·
+	// æŒ‡å®šã—ãŸã‚­ãƒ¼ã‚’æŠ¼ã™
 	//
 	procedure key_down(code, duration = this.DEFAULT_DOWN_DURATION)
 		kbd(code, down, duration)
 	fend
 	
 	//
-	// w’è‚µ‚½ƒL[‚ğ—£‚·
+	// æŒ‡å®šã—ãŸã‚­ãƒ¼ã‚’é›¢ã™
 	//
 	procedure key_up(code, duration = this.DEFAULT_DOWN_DURATION + 20)
 		kbd(code, up, duration)
 	fend
 	
 	//
-	// w’è‚µ‚½ƒL[‚ğ‰Ÿ‚µ‚Ä—£‚·
+	// æŒ‡å®šã—ãŸã‚­ãƒ¼ã‚’æŠ¼ã—ã¦é›¢ã™
 	//
 	procedure key_press(code, duration = this.DEFAULT_DOWN_DURATION)
 		this.key_down(code, duration)
@@ -50,7 +50,7 @@ module Input
 	fend
 	
 	//
-	// ƒ}ƒEƒXƒ{ƒ^ƒ“i¶j‚ğ‰Ÿ‚·
+	// ãƒã‚¦ã‚¹ãƒœã‚¿ãƒ³ï¼ˆå·¦ï¼‰ã‚’æŠ¼ã™
 	//
 	procedure mouse_down(x = empty, y = empty)
 		ifb x = EMPTY or y = EMPTY then
@@ -61,7 +61,7 @@ module Input
 	fend
 	
 	//
-	// ƒ}ƒEƒXƒ{ƒ^ƒ“i¶j‚ğ—£‚·
+	// ãƒã‚¦ã‚¹ãƒœã‚¿ãƒ³ï¼ˆå·¦ï¼‰ã‚’é›¢ã™
 	//
 	procedure mouse_up(x = empty, y = empty)
 		ifb x = empty or y = empty then
@@ -72,7 +72,7 @@ module Input
 	fend
 	
 	//
-	// ƒ}ƒEƒXƒ{ƒ^ƒ“i¶j‚ğƒNƒŠƒbƒN‚·‚é
+	// ãƒã‚¦ã‚¹ãƒœã‚¿ãƒ³ï¼ˆå·¦ï¼‰ã‚’ã‚¯ãƒªãƒƒã‚¯ã™ã‚‹
 	//
 	procedure mouse_click(x = empty, y = empty)
 		ifb x = empty or y = empty then
@@ -83,7 +83,7 @@ module Input
 	fend
 	
 	//
-	// w’è‚³‚ê‚½ƒL[‚ª‰Ÿ‚³‚ê‚é‚Ü‚Å‘Ò‹@‚·‚é
+	// æŒ‡å®šã•ã‚ŒãŸã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã‚‹ã¾ã§å¾…æ©Ÿã™ã‚‹
 	//
 	procedure wait_key(code)
 		repeat
