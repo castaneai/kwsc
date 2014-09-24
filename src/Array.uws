@@ -1,0 +1,120 @@
+//
+// 配列操作を支援するモジュール
+// 基本的に渡した配列そのものを書き換える”破壊メソッド”なので扱いに注意
+//
+
+//
+// モジュール本体
+//
+module Array
+
+	//
+	// 末尾に値を追加する
+	//
+	procedure append(var array[], value)
+		dim new_index = resize(array, length(array))
+		array[new_index] = value
+	fend
+	
+	//
+	// 配列をコピーする
+	//
+	procedure copy(src[], var dst[])
+		ifb length(src) > length(dst)
+			resize(dst, length(src) - 1)
+		endif
+		for i = 0 to length(src) - 1
+			dst[i] = src[i]
+		next
+	fend
+	
+	//
+	// 値が含まれているかどうか調べる
+	// 線形探索アルゴリズムを使っているため巨大な配列に使うと非常に処理時間がかかるので注意
+	//
+	function contains(array[], value)
+		for v in array
+			ifb v = value
+				result = true
+				exit
+			endif
+		next
+		
+		result = false
+	fend
+	
+	//
+	// 配列から指定した値を持つ要素を削除する
+	// 同じ値を持つものが2つ以上あればそれらも全て削除する
+	//
+	function remove(var array[], value)
+		dim remove_index = -1
+		for i = 0 to length(array) - 1
+			ifb array[i] = value
+				remove_index = i
+				break
+			endif
+		next
+		ifb remove_index = -1
+			result = -1
+			exit
+		endif
+		// 削除した分左にシフトする
+		for i = remove_index to length(array) - 2
+			array[i] = array[i + 1]
+		next
+		resize(array, length(array) - 2)
+		// 再帰的に適用
+		result = remove(array, value)
+	fend
+
+	//
+	// 2つの配列が等しいかどうか調べる
+	// 2つの配列が等しいというのは要素数が同じで、
+	// すべての要素が順序通り同じであるときのみ成り立つ
+	//
+	function sequential_equal(array1[], array2[])
+		ifb length(array1) <> length(array2)
+			result = false
+			exit
+		endif
+		for i = 0 to length(array1) - 1
+			ifb array1[i] <> array2[i]
+				result = false
+				exit
+			endif
+		next
+		
+		result = true
+	fend
+
+	//
+	// 文字列を指定文字で区切って配列に格納する
+	// 返り値は完成した配列の要素数
+	// UWSC のver4.7からは標準関数となっている
+	//
+	function split(var array[], str, delimiter)
+		str = trim(str)
+		dim count = 0
+		dim buffer = ""
+		for i = 1 to lengthb(str)
+			char = copyb(str, i, 1)
+			ifb char = delimiter
+				count = count + 1
+				resize(array, count - 1)
+				array[count - 1] = buffer
+				buffer = ""
+			else
+				buffer = buffer + char
+			endif
+		next
+		ifb length(buffer) > 0
+			count = count + 1
+			resize(array, count - 1)
+			array[count - 1] = buffer
+		endif
+		
+		result = count 
+	fend
+
+endmodule

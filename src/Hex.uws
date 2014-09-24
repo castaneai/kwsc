@@ -1,0 +1,54 @@
+//
+// 単体テスト
+//
+ifb GET_UWSC_NAME = "Hex.uws"
+	call Test.uws
+	
+	// 単一の16進数表記文字列を数値に変換できるか
+	dim test_hex_char = "FF"
+	Test.assert_equals(255, Hex.hex2int(test_hex_char))
+
+	dim test_hex_str = "61 62 63 64 65 66 67"
+	dim test_str = "abcdefg"
+	Test.assert_equals(test_str, Hex.hex2str(test_hex_str))
+	Test.assert_equals(test_hex_str, Hex.str2hex(test_str))
+endif
+
+call "Array.uws"
+
+module Hex
+
+	//
+	// バイト列データ文字列を16進数表記文字列に変換する
+	//
+	function str2hex(str)
+		dim buffer = ""
+		for i = 1 to lengthb(str)
+			ascii = ascb(copyb(str, i, 1))
+			if ascii < $10 then char = "0" + format(ascii, 0, -1) else char = format(ascii, 0, -1)
+			buffer = buffer + strconv(char, SC_UPPERCASE) + " "
+		next
+		result = trim(buffer)
+	fend
+	
+	//
+	// 16進数文字を10進数整数に変換する
+	//
+	function hex2int(hex)
+		result = eval("$" + hex)
+	fend
+	
+	//
+	// 16進数表記文字列をバイト列データ文字列に変換する
+	//
+	function hex2str(hex)
+		dim hex_array[0]
+		Array.split(hex_array, hex, " ")
+		dim buffer = ""
+		for i = 0 to length(hex_array) - 1
+			buffer = buffer + chrb(Hex.hex2int(hex_array[i]))
+		next
+		result = buffer
+	fend
+	
+endmodule

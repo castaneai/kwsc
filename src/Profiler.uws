@@ -1,0 +1,28 @@
+//
+// ある処理に要する時間を計測する機能を提供するモジュール
+//
+module Profiler
+
+	//
+	// 開始時刻
+	//
+	dim start_time
+	
+	//
+	// 開始する
+	//
+	procedure start()
+		gettime()
+		this.start_time = G_TIME_ZZ
+	fend
+	
+	//
+	// 停止し、結果（ミリ秒）を返す
+	//
+	function stop()
+		gettime()
+		dim end_time = G_TIME_ZZ
+		result = (end_time - this.start_time)
+	fend
+
+endmodule

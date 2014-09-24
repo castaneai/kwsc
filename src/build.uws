@@ -1,0 +1,4 @@
+call Dist.uws
+
+getdir(GET_CUR_DIR)
+Dist.build(

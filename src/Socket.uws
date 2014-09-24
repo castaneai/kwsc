@@ -1,0 +1,60 @@
+//
+// 単体テスト
+//
+ifb GET_UWSC_NAME = "Socket.uws"
+	Socket.init()
+	dim sock = Socket.open("127.0.0.1", 10900)
+	str = ""
+	for i = 0 to $7f
+		str = str + chr(i)
+	next
+	Socket.send(sock, str)
+	Socket.close(sock)
+	Socket.cleanup()
+endif
+
+module Socket
+	
+	def_dll uwsocket_init() : bool : uwsocket.dll
+	def_dll uwsocket_open(string, long) : long : uwsocket.dll
+	def_dll uwsocket_send(long, string, long) : long : uwsocket.dll
+	def_dll uwsocket_close(long) : void : uwsocket.dll
+	def_dll uwsocket_cleanup() : bool : uwsocket.dll
+
+	//
+	// 初期化
+	//
+	procedure init()
+		uwsocket_init()
+	fend
+	
+	//
+	// ソケットを作成する
+	//
+	function open(host, port)
+		dim sock = uwsocket_open(host, port)
+		result = sock
+	fend
+	
+	//
+	//
+	//
+	function send(socket_handle, data)
+		result = uwsocket_send(socket_handle, data, lengthb(data))
+	fend
+	
+	//
+	// ソケットを閉じる
+	//
+	procedure close(socket_handle)
+		uwsocket_close(socket_handle)
+	fend
+	
+	//
+	// 後始末
+	//
+	procedure cleanup()
+		uwsocket_cleanup()
+	fend
+
+endmodule

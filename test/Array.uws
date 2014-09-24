@@ -1,0 +1,52 @@
+call ../src/Array.uws
+call ../src/Test.uws
+
+dim a[] = 1, 2, 3
+// 指定した要素を含むかどうか判断できるかどうか
+Test.assert_equals(true, Array.contains(a, 1))
+Test.assert_equals(false, Array.contains(a, 4))
+
+// 要素を追加できるかどうか
+Array.append(a, 4)
+Test.assert_equals(4, a[3])
+
+// 要素を削除できるかどうか
+dim b[] = 1, 1, 2, 2, 3, 3
+Array.remove(b, 2)
+Test.assert_equals(4, length(b))
+Test.assert_equals(false, Array.contains(b, 2))
+
+// 配列をコピーできるか
+// たとえコピー先の配列がコピー元より小さくても自動的に拡張されるか
+dim src[] = 1, 2, 3
+dim dst[0]
+Array.copy(src, dst)
+Test.assert_equals(1, dst[0])
+Test.assert_equals(2, dst[1])
+Test.assert_equals(3, dst[2])
+// コピー元配列に要素を追加してもコピー先は変化しないかどうか
+src[0] = 4
+Test.assert_equals(1, dst[0])
+
+// 配列の要素による比較ができるかどうか
+dim c[] = 1, 2, 3
+dim d[] = 1, 2, 3
+Test.assert_equals(true, Array.sequential_equal(c, d))
+
+// 通常の配列とSAFEARRAYでも要素比較可能かどうか
+dim e[] = 1,2,3,4
+dim f = safearray(0, 3)
+f[0] = 1
+f[1] = 2
+f[2] = 3
+f[3] = 4
+Test.assert_equals(true, Array.sequential_equal(e, f))
+
+// SAFEARRAYを通常の配列に変換できるか
+dim sa1 = safearray(0, 1)
+sa1[0] = 10
+sa1[1] = 20
+dim na1[2]
+Array.copy(sa1, na1)
+Test.assert_equals(10, na1[0])
+Test.assert_equals(20, na1[1])
